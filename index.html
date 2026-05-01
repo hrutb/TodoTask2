@@ -18,8 +18,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <form action="" id="todoForm">
-
+                    <form  id="todoForm">
+                       <div class="form-group">
+                        <label for="todoItem sr-only">Todo item</label>
+                        <input type="text" class="form-control" id="todoItem">
+                       </div>  
+                       <button type="submit" 
+                               class="btn btn-sm btn-outline-primary btn-block"
+                               id="addTodo">Add todo</button>
+             
                     </form>
                 </div>
                 <div class="col-md-6 mt-5">
@@ -41,7 +48,7 @@
 
 
 
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="./assets/js/app.js"></script>
     </body>
 </html>

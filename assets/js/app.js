@@ -18,13 +18,11 @@ let todoArr =[
 
 const todoForm =document.getElementById('todoForm'); 
 const  todoContainer=document.getElementById('todoContainer') ;
-
-
+const todoItemControl=document.getElementById('todoItem');
+const addTodoItem= document.getElementById('addTodo');
 
 function createArr(arr){ 
-         
-       let result =' ';
-      
+       let result ='';
     arr.forEach(ele=>{ 
          result += `<li class="list-group-item d-flex justify-content-between" id="todoItem">
                            <strong>${ele.todoItem}</strong> 
@@ -34,27 +32,55 @@ function createArr(arr){
                          </div>
                         </li>`    
        })
+     
+     todoContainer.innerHTML=result;
+}
+ createArr(todoArr)
+
+function snackbar(msg){
+          swal.fire({ 
+             title:msg,
+             timer:2000,
+             icon:'success'
+          })
+}
+function onTodoSubmit(eve){
+      eve.preventDefault(); 
+    let addTodo={ 
+            todoItem:todoItemControl.value,
+            todoId:Date.now().toString()
+        }
+
+todoArr.unshift(addTodo);
+ 
+ let li = document.createElement('li') ;
+     li.className='list-group-item d-flex justify-content-between';
+     li.innerHTML =`
+                      <strong>${addTodo.todoItem}</strong> 
+                         <div>
+                             <i class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
+                             <i class="fa-solid fa-trash fa-2x text-danger "></i>   
+                         </div>
+                           
+                    `
+let ul =document.querySelector('ul') 
+    ul.append(li);
+
+todoForm.reset();
+
+   snackbar(`new todo Item is added successfully`)
 
 
-     todoContainer.innerHTML =result;
 
 }
 
 
-createArr(todoArr)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+todoForm.addEventListener('submit', onTodoSubmit)
+// todoItemControl.addEventListener('')
 
 // todoContainer.addEventListener()
