@@ -24,11 +24,11 @@ const addTodoItem= document.getElementById('addTodo');
 function createArr(arr){ 
        let result ='';
     arr.forEach(ele=>{ 
-         result += `<li class="list-group-item d-flex justify-content-between" id="todoItem">
+         result += `<li class="list-group-item d-flex justify-content-between" id=${ele.todoId}>
                            <strong>${ele.todoItem}</strong> 
                          <div>
-                             <i class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
-                             <i class="fa-solid fa-trash fa-2x text-danger "></i>   
+                             <i   class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
+                             <i onclick="onRemove(this)" class="fa-solid fa-trash fa-2x text-danger "></i>   
                          </div>
                         </li>`    
        })
@@ -44,6 +44,7 @@ function snackbar(msg){
              icon:'success'
           })
 }
+
 function onTodoSubmit(eve){
       eve.preventDefault(); 
     let addTodo={ 
@@ -58,8 +59,8 @@ todoArr.unshift(addTodo);
      li.innerHTML =`
                       <strong>${addTodo.todoItem}</strong> 
                          <div>
-                             <i class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
-                             <i class="fa-solid fa-trash fa-2x text-danger "></i>   
+                             <i  role="button " class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
+                             <i  role="button" onclick="onRemove(this)" class="fa-solid fa-trash fa-2x text-danger "></i>   
                          </div>
                            
                     `
@@ -76,11 +77,17 @@ todoForm.reset();
 
 
 
+function onRemove(eve){
+    let remove_id = eve.closest('li').id;
+    let getIndex = todoArr.findIndex(ele=>ele.todoId===remove_id); 
+    todoArr.splice(getIndex,1);
+
+   eve.closest('li').remove();   
+}
 
 
 
-
-todoForm.addEventListener('submit', onTodoSubmit)
+todoForm.addEventListener('submit',onTodoSubmit)
 // todoItemControl.addEventListener('')
 
 // todoContainer.addEventListener()

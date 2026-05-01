@@ -8,3 +8,6 @@ body{
     background-color: #ededed;
 }
 
+i{ 
+  cursor:pointer;
+}
