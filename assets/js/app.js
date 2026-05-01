@@ -20,14 +20,16 @@ const todoForm =document.getElementById('todoForm');
 const  todoContainer=document.getElementById('todoContainer') ;
 const todoItemControl=document.getElementById('todoItem');
 const addTodoItem= document.getElementById('addTodo');
+const updateTodo = document.getElementById('updateTodo');
 
+const cl =console.log;
 function createArr(arr){ 
        let result ='';
     arr.forEach(ele=>{ 
          result += `<li class="list-group-item d-flex justify-content-between" id=${ele.todoId}>
                            <strong>${ele.todoItem}</strong> 
                          <div>
-                             <i   class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
+                             <i onclick=onEdit(this)  class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
                              <i onclick="onRemove(this)" class="fa-solid fa-trash fa-2x text-danger "></i>   
                          </div>
                         </li>`    
@@ -59,7 +61,7 @@ todoArr.unshift(addTodo);
      li.innerHTML =`
                       <strong>${addTodo.todoItem}</strong> 
                          <div>
-                             <i  role="button " class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
+                             <i  onclick="onEdit(this)" role="button " class="fa-solid fa-pen-to-square fa-2x  text-primary"></i>
                              <i  role="button" onclick="onRemove(this)" class="fa-solid fa-trash fa-2x text-danger "></i>   
                          </div>
                            
@@ -85,9 +87,33 @@ function onRemove(eve){
    eve.closest('li').remove();   
 }
 
+let Edit_id;
+function onEdit(eve){  
+     Edit_id= eve.closest('li').id; 
+         cl(Edit_id); // we will get the id of todoItem
+    let Edit_obj= todoArr.find(t=>t.todoId ===Edit_id); 
+         cl(Edit_obj);       // it will give object...
+    todoItemControl.value =Edit_obj.todoItem;  //it will patch the data on todo control 
+    addTodo.classList.add('d-none');  //adding d-none class... 
+    updateTodo.classList.remove('d-none'); //  showing update button....
 
+}
+function todoUpdateHandler(){ 
+   let update_obj ={ 
+       todoItem: todoItemControl.value, 
+       todoId:Edit_id
+   } 
 
-todoForm.addEventListener('submit',onTodoSubmit)
+ let getIndex =todoArr.findIndex(ele=>ele.todoId ===Edit_id); 
+     todoArr[getIndex] =update_obj;
+ addTodo.classList.remove('d-none'); 
+ updateTodo.classList.add('d-none');
+  snackbar('New todo item is updated....!!!')
+}
+
+todoForm.addEventListener('submit',onTodoSubmit);
+ updateTodo.addEventListener('click',todoUpdateHandler);
+
 // todoItemControl.addEventListener('')
 
 // todoContainer.addEventListener()
